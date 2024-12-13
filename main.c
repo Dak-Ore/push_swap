@@ -6,7 +6,7 @@
 /*   By: rsebasti <rsebasti@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:52:26 by rsebasti          #+#    #+#             */
-/*   Updated: 2024/12/13 16:48:54 by rsebasti         ###   ########.fr       */
+/*   Updated: 2024/12/13 17:25:08 by rsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,20 @@ int	to_push(t_stack *stack, int pivot)
 
 void	try_sorting(t_stack *a, t_stack *b)
 {
-	int		mediane;
+	int		untier;
+	int		deuxtier;
 
-	mediane = f_elem(a->sorted, a->size / 2);
-	while (to_push(a, mediane) > 0)
+	untier = f_elem(a->sorted, a->size / 3);
+	deuxtier = f_elem(a->sorted, a->size * 2 / 3);
+	while (to_push(a, deuxtier) > 0)
 	{
-		if (a->first->content <= mediane)
+		if (a->first->content <= deuxtier)
 		{
-			if (a->first->content > a->first->next->content)
+			if (a->first->content < a->first->next->content && a->first->next->content < deuxtier)
 				ft_sa(a);
 			ft_pb(a,b);
+			if (b->first->content <= untier)
+				ft_rb(b);
 		}
 		else
 		{
@@ -78,20 +82,17 @@ void	try_sorting(t_stack *a, t_stack *b)
 		else
 			ft_ra(a);
 	}
-	while (!is_sorted(b,0))
+	while (!is_sorted(b,1))
 	{
-		if (b->first->content > b->first->next->content)
+		if (b->first->content < b->first->next->content)
 			ft_sb(b);
-		else if (b->first->content < b->last->content)
+		else if (b->first->content > b->last->content)
 			ft_rrb(b);
 		else
 			ft_rb(b);
 	}
 	while (b->size > 0)
-	{
-		ft_rrb(b);
 		ft_pa(a, b);
-	}
 }
 
 int	main(int argc, char **argv)
