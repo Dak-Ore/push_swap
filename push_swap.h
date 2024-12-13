@@ -6,7 +6,7 @@
 /*   By: rsebasti <rsebasti@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:27:45 by rsebasti          #+#    #+#             */
-/*   Updated: 2024/12/13 15:19:34 by rsebasti         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:40:45 by rsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_list	*ft_lst_dup(t_list *lst);
 int		f_pos(t_list *lst, int value);
 int		f_elem(t_list *lst, int pos);
 t_list	*f_prev(t_stack *a, int value);
-int		is_sorted(t_stack *a);
+int		is_sorted(t_stack *a, int order);
 void	ft_sa(t_stack *a);
 void	ft_sb(t_stack *b);
 void	ft_ss(t_stack *a, t_stack *b);

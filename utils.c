@@ -6,7 +6,7 @@
 /*   By: rsebasti <rsebasti@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 11:36:05 by rsebasti          #+#    #+#             */
-/*   Updated: 2024/12/13 15:18:26 by rsebasti         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:39:57 by rsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_list	*ft_lst_dup(t_list *lst)
 	return (new);
 }
 
-int	is_sorted(t_stack *a)
+int	is_sorted(t_stack *a, int order)
 {
 	t_list	*current;
 	t_list	*cursor;
@@ -36,7 +36,9 @@ int	is_sorted(t_stack *a)
 		cursor = current->next;
 		while (cursor)
 		{
-			if (cursor->content < current->content)
+			if (cursor->content < current->content && order == 0)
+				return (0);
+			if (cursor->content > current->content && order == 1)
 				return (0);
 			cursor = cursor->next;
 		}

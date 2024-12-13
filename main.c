@@ -6,7 +6,7 @@
 /*   By: rsebasti <rsebasti@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:52:26 by rsebasti          #+#    #+#             */
-/*   Updated: 2024/12/13 16:29:07 by rsebasti         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:48:54 by rsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	try_sorting(t_stack *a, t_stack *b)
 				ft_ra(a);
 		}
 	}
-	while (!is_sorted(a))
+	while (!is_sorted(a,0))
 	{
 		if (a->first->content > a->first->next->content)
 			ft_sa(a);
@@ -78,7 +78,7 @@ void	try_sorting(t_stack *a, t_stack *b)
 		else
 			ft_ra(a);
 	}
-	while (!is_sorted(b))
+	while (!is_sorted(b,0))
 	{
 		if (b->first->content > b->first->next->content)
 			ft_sb(b);
