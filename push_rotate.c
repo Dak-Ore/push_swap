@@ -6,34 +6,13 @@
 /*   By: rsebasti <rsebasti@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:43:52 by rsebasti          #+#    #+#             */
-/*   Updated: 2024/12/13 16:07:33 by rsebasti         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:27:52 by rsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 void	ft_pa(t_stack *a, t_stack *b)
-{
-	t_list	*temp;
-
-	if (!a || !b || a->size == 0)
-		return ;
-	temp = a->first;
-	a->first = a->first->next;
-	if (b->size == 0)
-	{
-		temp->next = NULL;
-		b->last = temp;
-	}
-	else
-		temp->next = b->first;
-	b->first = temp;
-	b->size = b->size + 1;
-	a->size = a->size - 1;
-	ft_putstr_fd("pa\n", 1);
-}
-
-void	ft_pb(t_stack *a, t_stack *b)
 {
 	t_list	*temp;
 
@@ -51,6 +30,31 @@ void	ft_pb(t_stack *a, t_stack *b)
 	a->first = temp;
 	a->size = a->size + 1;
 	b->size = b->size - 1;
+	if (b->size == 0)
+		b->first = NULL;
+	ft_putstr_fd("pa\n", 1);
+}
+
+void	ft_pb(t_stack *a, t_stack *b)
+{
+	t_list	*temp;
+
+	if (!a || !b || a->size == 0)
+		return ;
+	temp = a->first;
+	a->first = a->first->next;
+	if (b->size == 0)
+	{
+		temp->next = NULL;
+		b->last = temp;
+	}
+	else
+		temp->next = b->first;
+	b->first = temp;
+	b->size = b->size + 1;
+	a->size = a->size - 1;
+	if (a->size == 0)
+		a->first = NULL;
 	ft_putstr_fd("pb\n", 1);
 }
 
