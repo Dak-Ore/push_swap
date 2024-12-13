@@ -6,7 +6,7 @@
 /*   By: rsebasti <rsebasti@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:52:26 by rsebasti          #+#    #+#             */
-/*   Updated: 2024/12/12 12:20:50 by rsebasti         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:06:09 by rsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,76 @@ void	ft_cleaner(t_stack *a, t_stack *b)
 		ft_lstclear(&a->first);
 	if (b->size > 0)
 		ft_lstclear(&b->first);
+	if (a->sorted)
+		ft_lstclear(&a->sorted);
 	free(a);
 	free(b);
+}
+
+int	to_push(t_stack *stack, int pivot)
+{
+	t_list	*lst;
+	int		i;
+
+	lst = stack->first;
+	i = 0;
+	while (lst)
+	{
+		if (lst->content <= pivot)
+			i++;
+		lst = lst->next;
+	}
+	return (i);
+}
+
+void	try_sorting(t_stack *a, t_stack *b)
+{
+	int		mediane;
+
+	mediane = f_elem(a->sorted, a->size / 2);
+	ft_putstr_fd("Mediane:\n", 1);
+	putnbr(mediane);
+	while (to_push(a, mediane) > 0)
+	{
+		if (a->first->content <= mediane)
+		{
+			if (a->first->content > a->first->next->content)
+				ft_sa(a);
+			ft_pa(a,b);
+		}
+		else
+		{
+			if (a->first->content > a->first->next->content)
+				ft_sa(a);
+			else if (a->first->content < a->last->content)
+				ft_rra(a);
+			else
+				ft_ra(a);
+		}
+	}
+	while (!is_sorted(a))
+	{
+		if (a->first->content > a->first->next->content)
+			ft_sa(a);
+		else if (a->first->content < a->last->content)
+			ft_rra(a);
+		else
+			ft_ra(a);
+	}
+	while (!is_sorted(b))
+	{
+		if (b->first->content > b->first->next->content)
+			ft_sa(b);
+		else if (b->first->content < b->last->content)
+			ft_rra(b);
+		else
+			ft_ra(b);
+	}
+	while (b->size > 0)
+	{
+		ft_rrb(b);
+		ft_pb(a, b);
+	}
 }
 
 int	main(int argc, char **argv)
@@ -48,7 +116,10 @@ int	main(int argc, char **argv)
 		str = &argv[1];
 	if (!init_stack(str, a))
 		return (ft_putstr_fd("ERROR with argument\n", 2), ft_cleaner(a, b), 0);
+	try_sorting(a,b);
 	ft_putstr_fd("pile a:\n", 1);
 	ft_lstiter(a->first, &putnbr);
+	ft_putstr_fd("pile ba:\n", 1);
+	ft_lstiter(b->first, &putnbr);
 	ft_cleaner(a, b);
 }

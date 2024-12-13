@@ -6,7 +6,7 @@
 /*   By: rsebasti <rsebasti@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:27:45 by rsebasti          #+#    #+#             */
-/*   Updated: 2024/12/11 16:21:17 by rsebasti         ###   ########.fr       */
+/*   Updated: 2024/12/13 15:19:34 by rsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,18 @@ typedef struct s_stack
 {
 	t_list	*first;
 	t_list	*last;
+	t_list	*sorted;
 	int		size;
 }	t_stack;
 
 int		init_stack(char **argv, t_stack *stack);
 t_stack	*init_stack_empty(void);
+void	sort_int_list(t_stack *stack);
+t_list	*ft_lst_dup(t_list *lst);
+int		f_pos(t_list *lst, int value);
+int		f_elem(t_list *lst, int pos);
+t_list	*f_prev(t_stack *a, int value);
+int		is_sorted(t_stack *a);
 void	ft_sa(t_stack *a);
 void	ft_sb(t_stack *b);
 void	ft_ss(t_stack *a, t_stack *b);

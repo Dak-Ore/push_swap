@@ -3,6 +3,7 @@ LIBFT = libft/libft.a
 FLAGS = -Wall -Wextra -Werror -ggdb
 
 SOURCES = main.c stack.c swap.c push_rotate.c revrotate.c\
+			utils.c
 
 OBJS = $(SOURCES:.c=.o)
 

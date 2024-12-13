@@ -6,7 +6,7 @@
 /*   By: rsebasti <rsebasti@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:43:16 by rsebasti          #+#    #+#             */
-/*   Updated: 2024/12/12 12:39:21 by rsebasti         ###   ########.fr       */
+/*   Updated: 2024/12/13 15:46:39 by rsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	is_valid_number(char *nb, t_stack *stack)
 	t_list	*curr;
 
 	i = 0;
-	while (nb[i] && ft_isdigit(nb[i]))
+	while (nb[i] && (ft_isdigit(nb[i]) || nb[i] == '+' || nb[i] == '-'))
 		i++;
 	nbv = ft_atol(nb);
 	if (nbv > INT_MAX || nbv < INT_MIN)
@@ -63,7 +63,32 @@ t_stack	*init_stack_empty(void)
 
 	stack = malloc(sizeof(t_stack));
 	stack->size = 0;
+	stack->sorted = NULL;
 	return (stack);
+}
+
+void	sort_int_list(t_stack *stack)
+{
+	t_list	*current;
+	t_list	*cursor;
+	int		temp;
+
+	current = stack->sorted;
+	while (current)
+	{
+		cursor = current->next;
+		while (cursor)
+		{
+			if (cursor->content < current->content)
+			{
+				temp = current->content;
+				current->content = cursor->content;
+				cursor->content = temp;
+			}
+			cursor = cursor->next;
+		}
+		current = current->next;
+	}
 }
 
 int	init_stack(char **str, t_stack *stack)
@@ -84,6 +109,8 @@ int	init_stack(char **str, t_stack *stack)
 		i++;
 	}
 	stack->last = ft_lstlast(lst);
-	stack->size = i - 1;
+	stack->sorted = ft_lst_dup(stack->first);
+	sort_int_list(stack);
+	stack->size = i;
 	return (1);
 }
