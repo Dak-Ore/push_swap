@@ -6,7 +6,7 @@
 /*   By: rsebasti <rsebasti@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:52:26 by rsebasti          #+#    #+#             */
-/*   Updated: 2024/12/13 17:25:08 by rsebasti         ###   ########.fr       */
+/*   Updated: 2024/12/15 18:19:41 by rsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,69 +30,108 @@ void	ft_cleaner(t_stack *a, t_stack *b)
 	free(b);
 }
 
-int	to_push(t_stack *stack, int pivot)
+int	smart_push(int value, int *pivot, int i, int sort)
+{
+	if (sort == 0)
+	{
+		if (i == 3 && value >= pivot[4 + i])
+			return (1);
+		if (i != 3 && value >= pivot[4 + i] && value < pivot[4 + i + 1])
+			return (1);
+	}
+	else if (sort == 1)
+	{
+		if (i == 3 && value <= pivot[4 - i - 1])
+			return (1);
+		if (i != 3 && value <= pivot[4 - i] && value > pivot[4 - i - 1])
+			return (1);
+	}
+	else
+	{
+		if ((i == 7 && value >= pivot[i]) || (i == 0 && value <= pivot[i]))
+			return (1);
+		if (value >= pivot[i - 1] && value < pivot[i])
+			return (1);
+	}
+	return (0);
+}
+
+int	to_push(t_stack *stack, int *pivot, int i, int sort)
 {
 	t_list	*lst;
-	int		i;
+	int		nb;
 
 	lst = stack->first;
-	i = 0;
+	nb = 0;
 	while (lst)
 	{
-		if (lst->content <= pivot)
-			i++;
+		if (smart_push(lst->content, pivot, i, sort))
+			nb++;
 		lst = lst->next;
 	}
-	return (i);
+	return (nb);
+}
+
+int	f_high_low(t_stack *stack, int min, int max, int sort)
+{
+	t_list	*lst;
+	int		best;
+
+	lst = stack->first;
+	while (lst && (lst->content < min || lst->content > max))
+		lst = lst->next;
+	best = lst->content;
+	while (lst && lst->content >= min || lst->content <= max)
+	{
+		lst = lst->next;
+		if ((sort == 0 && lst->content > best)
+			|| (sort == 1 && lst->content < best))
+			best = lst->content;
+	}
+	return (best);
+}
+
+void	smart_push_back(t_stack *a, t_stack *b, int *pivots, int i)
+{
+	if (b->first == f_high_low(b, pivots[i], pivots[i - 1]))
+	{
+		
+	}
 }
 
 void	try_sorting(t_stack *a, t_stack *b)
 {
-	int		untier;
-	int		deuxtier;
+	int	tiers[8];
+	int	i;
 
-	untier = f_elem(a->sorted, a->size / 3);
-	deuxtier = f_elem(a->sorted, a->size * 2 / 3);
-	while (to_push(a, deuxtier) > 0)
+	i = -1;
+	while (++i < 8)
+		tiers[i] = f_elem(a->sorted, a->size * (i + 1) / 8);
+	i = -1;
+	while (++i < 4)
 	{
-		if (a->first->content <= deuxtier)
+		while (to_push(a, tiers, i, 0) > 0 || to_push(a, tiers, i, 1) > 0)
 		{
-			if (a->first->content < a->first->next->content && a->first->next->content < deuxtier)
-				ft_sa(a);
-			ft_pb(a,b);
-			if (b->first->content <= untier)
+			if (smart_push(a->first->content, tiers, i, 0))
+			{
+				ft_pb(a, b);
+			}
+			else if (smart_push(a->first->content, tiers, i, 1))
+			{
+				ft_pb(a, b);
 				ft_rb(b);
-		}
-		else
-		{
-			if (a->first->content > a->first->next->content)
-				ft_sa(a);
-			else if (a->first->content < a->last->content)
-				ft_rra(a);
+			}
 			else
 				ft_ra(a);
 		}
 	}
-	while (!is_sorted(a,0))
-	{
-		if (a->first->content > a->first->next->content)
-			ft_sa(a);
-		else if (a->first->content < a->last->content)
-			ft_rra(a);
-		else
-			ft_ra(a);
-	}
-	while (!is_sorted(b,1))
-	{
-		if (b->first->content < b->first->next->content)
-			ft_sb(b);
-		else if (b->first->content > b->last->content)
-			ft_rrb(b);
-		else
-			ft_rb(b);
-	}
+	i = 7;
 	while (b->size > 0)
-		ft_pa(a, b);
+	{
+		while (to_push(b, tiers, i, 2) > 0)
+			smart_push_back(a, b, tiers, i);
+		i--;
+	}
 }
 
 int	main(int argc, char **argv)
