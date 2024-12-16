@@ -6,7 +6,7 @@
 /*   By: rsebasti <rsebasti@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 11:36:05 by rsebasti          #+#    #+#             */
-/*   Updated: 2024/12/13 16:39:57 by rsebasti         ###   ########.fr       */
+/*   Updated: 2024/12/16 11:48:42 by rsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ t_list	*ft_lst_dup(t_list *lst)
 	t_list	*new;
 
 	new = malloc(sizeof(t_list));
+	new = ft_lstnew(lst->content);
+	lst = lst->next;
 	while (lst)
 	{
 		ft_lstadd_back(&new, ft_lstnew(lst->content));
@@ -64,15 +66,17 @@ int	f_pos(t_list *lst, int value)
 
 int	f_elem(t_list *lst, int pos)
 {
-	int	i;
+	int		i;
+	t_list	*current;
 
 	i = 0;
-	while (lst && i < pos)
+	current = lst;
+	while (current && i < pos)
 	{
-		lst = lst->next;
+		current = current->next;
 		i++;
 	}
-	return (lst->content);
+	return (current->content);
 }
 
 t_list	*f_prev(t_stack *a, int value)

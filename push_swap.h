@@ -6,7 +6,7 @@
 /*   By: rsebasti <rsebasti@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:27:45 by rsebasti          #+#    #+#             */
-/*   Updated: 2024/12/13 16:40:45 by rsebasti         ###   ########.fr       */
+/*   Updated: 2024/12/16 15:17:18 by rsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ typedef struct s_stack
 	t_list	*sorted;
 	int		size;
 }	t_stack;
+
+//delete
+void	putnbr(int nb);
 
 int		init_stack(char **argv, t_stack *stack);
 t_stack	*init_stack_empty(void);
