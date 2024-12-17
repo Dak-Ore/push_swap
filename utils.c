@@ -6,7 +6,7 @@
 /*   By: rsebasti <rsebasti@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 11:36:05 by rsebasti          #+#    #+#             */
-/*   Updated: 2024/12/16 11:48:42 by rsebasti         ###   ########.fr       */
+/*   Updated: 2024/12/17 14:51:51 by rsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_list	*ft_lst_dup(t_list *lst)
 {
 	t_list	*new;
 
-	new = malloc(sizeof(t_list));
 	new = ft_lstnew(lst->content);
 	lst = lst->next;
 	while (lst)

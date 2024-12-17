@@ -6,7 +6,7 @@
 /*   By: rsebasti <rsebasti@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:43:16 by rsebasti          #+#    #+#             */
-/*   Updated: 2024/12/13 15:46:39 by rsebasti         ###   ########.fr       */
+/*   Updated: 2024/12/17 14:47:38 by rsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,10 @@ t_stack	*init_stack_empty(void)
 	stack = malloc(sizeof(t_stack));
 	stack->size = 0;
 	stack->sorted = NULL;
+	stack->nbg = 0;
+	stack->pivots = NULL;
+	stack->first = NULL;
+	stack->last = NULL;
 	return (stack);
 }
 

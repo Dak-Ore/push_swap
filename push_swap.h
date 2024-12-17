@@ -6,7 +6,7 @@
 /*   By: rsebasti <rsebasti@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:27:45 by rsebasti          #+#    #+#             */
-/*   Updated: 2024/12/16 15:17:18 by rsebasti         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:00:50 by rsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ typedef struct s_stack
 	t_list	*last;
 	t_list	*sorted;
 	int		size;
+	int		nbg;
+	int		*pivots;
 }	t_stack;
 
 //delete
