@@ -6,7 +6,7 @@
 /*   By: rsebasti <rsebasti@student.42perpignan.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:27:45 by rsebasti          #+#    #+#             */
-/*   Updated: 2024/12/17 11:00:50 by rsebasti         ###   ########.fr       */
+/*   Updated: 2024/12/18 11:52:37 by rsebasti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ typedef struct s_stack
 	int		*pivots;
 }	t_stack;
 
-//delete
-void	putnbr(int nb);
-
+int		f_high_low(t_stack *stack, int min, int max, int sort);
+void	push_back(t_stack *a, t_stack *b);
+void	smart_sorting(t_stack *a, t_stack *b);
+int		smart_push(int value, t_stack *stack, int i, int sort);
+int		to_push(t_stack *stack, int i, int sort);
 int		init_stack(char **argv, t_stack *stack);
 t_stack	*init_stack_empty(void);
 void	sort_int_list(t_stack *stack);
