@@ -67,7 +67,7 @@ int	to_push(t_stack *stack, int i, int sort)
 	return (nb);
 }
 
-void	parse_split(char *argv, t_stack *a, t_stack *b)
+int	parse_split(char *argv, t_stack *a, t_stack *b)
 {
 	char	**str;
 	int		i;
@@ -76,8 +76,15 @@ void	parse_split(char *argv, t_stack *a, t_stack *b)
 	str = ft_split(argv, ' ');
 	if (!init_stack(str, a))
 	{
-		ft_putstr_fd("ERROR with argument\n", 2);
+		ft_putstr_fd("ERROR\n", 2);
 		ft_cleaner(a, b);
+		while (str[i])
+		{
+			free(str[i]);
+			i++;
+		}
+		free(str);
+		return (0);
 	}
 	while (str[i])
 	{
@@ -85,6 +92,7 @@ void	parse_split(char *argv, t_stack *a, t_stack *b)
 		i++;
 	}
 	free(str);
+	return (1);
 }
 
 int	main(int argc, char **argv)
@@ -101,10 +109,13 @@ int	main(int argc, char **argv)
 	if (!a)
 		return (0);
 	if (argc == 2 && ft_strrchr(argv[1], ' '))
-		parse_split(argv[1], a, b);
+	{
+		if (!parse_split(argv[1], a, b))
+			return (0);
+	}
 	else
 		if (!init_stack(&argv[1], a))
-			return (ft_putstr_fd("ERROR with argument\n", 2), ft_cleaner(a, b), 0);
+			return (ft_putstr_fd("ERROR\n", 2), ft_cleaner(a, b), 0);
 	if (!is_sorted(a, 0))
 		smart_sorting(a, b);
 	ft_cleaner(a, b);
